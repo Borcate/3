@@ -1,1 +1,1 @@
-# aula-git-ebac
+# Testes End to End - Ebac Shop
