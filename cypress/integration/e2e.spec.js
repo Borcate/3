@@ -2,6 +2,9 @@
 
 const perfil = require('../fixtures/perfil.json')
 
+import checkout from '../support/page_objects/checkout.page'
+
+
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     /*  Como cliente 
         Quero acessar a Loja EBAC 
@@ -12,31 +15,23 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         E validando minha compra ao final */
 
     beforeEach(() => {
-        cy.visit('minha-conta/')
+        cy.visit('produtos//')
     });
 
-     afterEach(() => {
-        cy.visit('produtos/')
-   });
 
-    it('Acessar loja ', () => {
+    it('Deve selecionar produtos e validar compra', () => {
+        cy.pedidos_produtos1('Aether Gym Pant', '36', 'Blue', 1)
+        cy.pedidos_produtos2('Ajax Full-Zip Sweatshirt', 'S', 'Red', 1)
+        cy.pedidos_produtos3('Atlas Fitness Tank', 'L', 1)
+        cy.pedidos_produtos4('Augusta Pullover Jacket', 'M', 'Red', 1)
+
+        cy.get('.showlogin').click()
         cy.get('#username').type(perfil.usuario)
-        cy.get('#password').type(perfil.senha)
-        cy.get('.woocommerce-form > .button').click()
-    
-        cy.get('.page-title').should('contain', 'Minha conta')
-      });
-    
+        cy.get('#password').type(perfil.senha, {log: false})
+        cy.get('.woocommerce-button').click()
 
-    it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
-        
-        cy.get('[class="product-block grid"]')
-            //.first()
-            //.last()
-            //.eq(3)
-            .contains('Ariel Roll Sleeve Sweatshirt')
-            .click()
+        checkout.PreencherCheckout()
+    
     });
-
 
 })
