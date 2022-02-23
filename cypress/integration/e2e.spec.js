@@ -19,10 +19,20 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     });
 
     it('Deve selecionar produtos e validar compra', () => {
-        cy.pedidos_produtos1('Aether Gym Pant', '36', 'Blue', 1)
-        cy.pedidos_produtos2('Ajax Full-Zip Sweatshirt', 'S', 'Red', 1)
-        cy.pedidos_produtos3('Atlas Fitness Tank', 'L', 1)
-        cy.pedidos_produtos4('Augusta Pullover Jacket', 'M', 'Red', 1)
+        cy.pedidos_produtos('Aether Gym Pant', '36', 'Blue', 1)
+
+        cy.get('#primary-menu > .menu-item-629 > a').click()
+        cy.pedidos_produtos('Ajax Full-Zip Sweatshirt', 'S', 'Red', 1)
+
+        cy.get('#primary-menu > .menu-item-629 > a').click()
+        cy.pedidos_produtos('Atlas Fitness Tank', 'Blue','L', 1)
+
+        cy.get('#primary-menu > .menu-item-629 > a').click()
+        cy.get(':nth-child(2) > .page-numbers').click()
+        cy.pedidos_produtos('Augusta Pullover Jacket', 'M', 'Red', 1)
+        
+        cy.get('.dropdown-toggle > .mini-cart-items').click()
+        cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .checkout').click()
 
         cy.get('.showlogin').click()
         cy.get('#username').type(perfil.usuario)
@@ -30,7 +40,6 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         cy.get('.woocommerce-button').click()
 
         checkout.PreencherCheckout()
-    
     });
 
 })
