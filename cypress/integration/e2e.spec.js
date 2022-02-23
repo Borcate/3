@@ -40,6 +40,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         cy.get('.woocommerce-button').click()
 
         checkout.PreencherCheckout()
+        cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')
     });
 
 })
